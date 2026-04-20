@@ -56,8 +56,8 @@ export const LoginPage = () => {
               <p className="mt-3 text-xl font-semibold">Broker and Agent</p>
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-              <p className="text-sm text-white/60">External Users</p>
-              <p className="mt-3 text-xl font-semibold">Buyer and Seller data only</p>
+              <p className="text-sm text-white/60">Dashboard Access</p>
+              <p className="mt-3 text-xl font-semibold">Admin login only</p>
             </div>
           </div>
         </section>
@@ -65,6 +65,9 @@ export const LoginPage = () => {
         <section className="rounded-[32px] bg-white p-8 shadow-panel">
           <p className="text-sm uppercase tracking-[0.25em] text-brand-600">Secure Sign-In</p>
           <h2 className="mt-4 text-3xl font-semibold text-ink">Admin dashboard access</h2>
+          <p className="mt-3 text-sm leading-6 text-slate-600">
+            Only broker and agent accounts can sign in to this dashboard.
+          </p>
           <form className="mt-8 space-y-5" onSubmit={handleSubmit(onSubmit)}>
             <label className="block">
               <span className="mb-2 block text-sm font-medium text-ink">Email</span>
