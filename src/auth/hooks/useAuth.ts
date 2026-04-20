@@ -1,12 +1,14 @@
 import { authApi } from '@/auth/api/auth.api';
 import { authStorage } from '@/auth/services/authStorage.service';
 import type { LoginPayload } from '@/auth/types/auth.types';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { clearSession, restoreSession, setSession } from '@/store/slices/auth.slice';
+import { disconnectSocket } from '@/services/sockets/socket';
+import { useAppStore } from '@/store/app.store';
 
 export const useAuth = () => {
-  const dispatch = useAppDispatch();
-  const auth = useAppSelector((state) => state.auth);
+  const auth = useAppStore((state) => state.auth);
+  const setAuthSession = useAppStore((state) => state.setAuthSession);
+  const restoreAuthSession = useAppStore((state) => state.restoreAuthSession);
+  const clearAuthSession = useAppStore((state) => state.clearAuthSession);
 
   const login = async (payload: LoginPayload) => {
     const session = await authApi.login(payload);
@@ -16,19 +18,20 @@ export const useAuth = () => {
     }
 
     authStorage.save(session);
-    dispatch(setSession(session));
+    setAuthSession(session);
     return session;
   };
 
   const restore = () => {
     const session = authStorage.get();
-    dispatch(restoreSession(session));
+    restoreAuthSession(session);
     return session;
   };
 
   const logout = () => {
+    disconnectSocket();
     authStorage.clear();
-    dispatch(clearSession());
+    clearAuthSession();
   };
 
   return {

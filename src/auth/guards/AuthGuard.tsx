@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import { PageSkeleton } from '@/components/ui/PageSkeleton';
 import { useAppSelector } from '@/store/hooks';
 
 export const AuthGuard = ({ children }: PropsWithChildren) => {
@@ -8,8 +9,8 @@ export const AuthGuard = ({ children }: PropsWithChildren) => {
 
   if (status === 'restoring') {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-sand text-ink">
-        Restoring secure session...
+      <div className="min-h-screen bg-sand p-6">
+        <PageSkeleton />
       </div>
     );
   }

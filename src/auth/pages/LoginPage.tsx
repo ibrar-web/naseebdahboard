@@ -1,23 +1,44 @@
-import { useState, type FormEvent } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
+import { connectSocket } from '@/services/sockets/socket';
+import { initFcm } from '@/services/firebase/fcm.service';
 import { useAuth } from '@/auth/hooks/useAuth';
+
+const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
+
+type LoginFormValues = z.infer<typeof loginSchema>;
 
 export const LoginPage = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [email, setEmail] = useState('broker@naseeb.local');
-  const [password, setPassword] = useState('Password123!');
-  const [error, setError] = useState<string | null>(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: 'broker@naseeb.local',
+      password: 'Password123!',
+    },
+  });
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setError(null);
-
+  const onSubmit = async (values: LoginFormValues) => {
     try {
-      await login({ email, password });
+      const session = await login(values);
+      connectSocket(session.accessToken);
+      void initFcm(() => undefined);
       navigate('/', { replace: true });
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unable to login');
+      setError('root', {
+        message: err instanceof Error ? err.message : 'Unable to login',
+      });
     }
   };
 
@@ -44,30 +65,34 @@ export const LoginPage = () => {
         <section className="rounded-[32px] bg-white p-8 shadow-panel">
           <p className="text-sm uppercase tracking-[0.25em] text-brand-600">Secure Sign-In</p>
           <h2 className="mt-4 text-3xl font-semibold text-ink">Admin dashboard access</h2>
-          <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+          <form className="mt-8 space-y-5" onSubmit={handleSubmit(onSubmit)}>
             <label className="block">
               <span className="mb-2 block text-sm font-medium text-ink">Email</span>
               <input
+                type="email"
                 className="w-full rounded-2xl border border-brand-100 bg-brand-50/50 px-4 py-3 outline-none transition focus:border-brand-400"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
+                {...register('email')}
               />
+              {errors.email ? <p className="mt-2 text-sm text-red-700">{errors.email.message}</p> : null}
             </label>
             <label className="block">
               <span className="mb-2 block text-sm font-medium text-ink">Password</span>
               <input
                 type="password"
                 className="w-full rounded-2xl border border-brand-100 bg-brand-50/50 px-4 py-3 outline-none transition focus:border-brand-400"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
+                {...register('password')}
               />
+              {errors.password ? <p className="mt-2 text-sm text-red-700">{errors.password.message}</p> : null}
             </label>
-            {error ? <p className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p> : null}
+            {errors.root?.message ? (
+              <p className="rounded-2xl bg-red-50 px-4 py-3 text-sm text-red-700">{errors.root.message}</p>
+            ) : null}
             <button
               type="submit"
+              disabled={isSubmitting}
               className="w-full rounded-2xl bg-brand-600 px-4 py-3 font-semibold text-white transition hover:bg-brand-700"
             >
-              Login to Naseeb Dashboard
+              {isSubmitting ? 'Authorizing...' : 'Login to Naseeb Dashboard'}
             </button>
           </form>
         </section>
