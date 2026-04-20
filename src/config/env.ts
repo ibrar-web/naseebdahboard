@@ -21,6 +21,7 @@ export const env = {
   ),
   apiTimeoutMs: Number(required(import.meta.env.VITE_API_TIMEOUT_MS, '20000')),
   authSecret: required(import.meta.env.VITE_AUTH_SECRET, 'naseeb-dashboard-secret'),
+  // Firebase is configured only for FCM push notifications.
   firebaseApiKey: required(import.meta.env.VITE_FIREBASE_API_KEY),
   firebaseAuthDomain: required(import.meta.env.VITE_FIREBASE_AUTH_DOMAIN),
   firebaseProjectId: required(import.meta.env.VITE_FIREBASE_PROJECT_ID),

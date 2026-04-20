@@ -1,6 +1,7 @@
 import { initializeApp, getApps } from 'firebase/app';
 import { env } from '@/config/env';
 
+// Shared Firebase app for FCM only. Admin data does not live in Firebase.
 const firebaseConfig = {
   apiKey: env.firebaseApiKey,
   authDomain: env.firebaseAuthDomain,
