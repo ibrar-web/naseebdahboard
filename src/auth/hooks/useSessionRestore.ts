@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { authApi } from '@/auth/api/auth.api';
 import { authStorage } from '@/auth/services/authStorage.service';
 import type { AuthSession } from '@/auth/types/auth.types';
 import { initFcm } from '@/services/firebase/fcm.service';
 import {
+  apiRegistry,
   registerRefreshSessionHandler,
   registerUnauthorizedHandler,
 } from '@/services/api';
@@ -26,7 +26,7 @@ export const useSessionRestore = () => {
 
     registerUnauthorizedHandler(handleUnauthorized);
     registerRefreshSessionHandler(async (refreshToken) => {
-      const session = await authApi.refresh(refreshToken);
+      const session = await apiRegistry.auth.refresh(refreshToken);
       authStorage.save(session);
       if (mounted) {
         setAuthSession(session);
@@ -43,7 +43,7 @@ export const useSessionRestore = () => {
       }
 
       try {
-        const currentUser = await authApi.me();
+        const currentUser = await apiRegistry.auth.me();
 
         if (!mounted || !['broker', 'agent'].includes(currentUser.role)) {
           throw new Error('Unauthorized role');

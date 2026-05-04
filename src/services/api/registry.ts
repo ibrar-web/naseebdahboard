@@ -1,11 +1,11 @@
-import { authModule } from '@/services/api/modules/auth.module';
-import { dealsModule } from '@/services/api/modules/deals.module';
-import { marketplaceModule } from '@/services/api/modules/marketplace.module';
-import { usersModule } from '@/services/api/modules/users.module';
+import { authEndpoint } from '@/services/api/endpoints/auth.endpoint';
+import { dealsEndpoint } from '@/services/api/endpoints/deals.endpoint';
+import { marketplaceEndpoint } from '@/services/api/endpoints/marketplace.endpoint';
+import { usersEndpoint } from '@/services/api/endpoints/users.endpoint';
 
 export const apiRegistry = {
-  auth: authModule,
-  users: usersModule,
-  marketplace: marketplaceModule,
-  deals: dealsModule,
+  auth: authEndpoint,
+  users: usersEndpoint,
+  marketplace: marketplaceEndpoint,
+  deals: dealsEndpoint,
 };

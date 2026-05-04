@@ -1,8 +1,8 @@
-import { authApi } from '@/auth/api/auth.api';
-import { authStorage } from '@/auth/services/authStorage.service';
-import type { LoginPayload } from '@/auth/types/auth.types';
-import { disconnectSocket } from '@/services/sockets/socket';
-import { useAppStore } from '@/store/app.store';
+import { authStorage } from "@/auth/services/authStorage.service";
+import type { LoginPayload } from "@/auth/types/auth.types";
+import { apiRegistry } from "@/services/api";
+import { disconnectSocket } from "@/services/sockets/socket";
+import { useAppStore } from "@/store/app.store";
 
 export const useAuth = () => {
   const auth = useAppStore((state) => state.auth);
@@ -11,10 +11,12 @@ export const useAuth = () => {
   const clearAuthSession = useAppStore((state) => state.clearAuthSession);
 
   const login = async (payload: LoginPayload) => {
-    const session = await authApi.login(payload);
-
-    if (!['broker', 'agent'].includes(session.user.role)) {
-      throw new Error('Only broker and agent accounts can access this dashboard.');
+    const session = await apiRegistry.auth.login(payload);
+    console.log("session", session);
+    if (!["broker", "agent"].includes(session.user.role)) {
+      throw new Error(
+        "Only broker and agent accounts can access this dashboard.",
+      );
     }
 
     authStorage.save(session);

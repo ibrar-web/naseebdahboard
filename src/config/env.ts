@@ -13,11 +13,15 @@ export const env = {
   appName: required(import.meta.env.VITE_APP_NAME, 'Naseeb AgriTech Admin'),
   apiBaseUrl: required(
     import.meta.env.VITE_API_BASE_URL,
-    modeValue(import.meta.env.VITE_API_BASE_URL_DEVELOPMENT, import.meta.env.VITE_API_BASE_URL_PRODUCTION, 'http://localhost:3000'),
+    modeValue(
+      import.meta.env.VITE_API_BASE_URL_DEVELOPMENT,
+      import.meta.env.VITE_API_BASE_URL_PRODUCTION,
+      'http://localhost:3001/api/v1',
+    ),
   ),
   socketUrl: required(
     import.meta.env.VITE_SOCKET_URL,
-    modeValue(import.meta.env.VITE_SOCKET_URL_DEVELOPMENT, import.meta.env.VITE_SOCKET_URL_PRODUCTION, 'http://localhost:3000'),
+    modeValue(import.meta.env.VITE_SOCKET_URL_DEVELOPMENT, import.meta.env.VITE_SOCKET_URL_PRODUCTION, 'http://localhost:3001'),
   ),
   apiTimeoutMs: Number(required(import.meta.env.VITE_API_TIMEOUT_MS, '20000')),
   authSecret: required(import.meta.env.VITE_AUTH_SECRET, 'naseeb-dashboard-secret'),
