@@ -12,7 +12,6 @@ export const useAuth = () => {
 
   const login = async (payload: LoginPayload) => {
     const session = await apiRegistry.auth.login(payload);
-    console.log("session", session);
     if (!["broker", "agent"].includes(session.user.role)) {
       throw new Error(
         "Only broker and agent accounts can access this dashboard.",

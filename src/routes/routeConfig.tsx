@@ -10,6 +10,11 @@ import { DealsPage } from '@/modules/deals/pages/DealsPage';
 import { DocumentsPage } from '@/modules/documents/pages/DocumentsPage';
 import { AnalyticsPage } from '@/modules/analytics/pages/AnalyticsPage';
 import { AdminPlaceholderPage } from '@/modules/admin/pages/AdminPlaceholderPage';
+import { CategoriesPage } from '@/modules/categories/pages/CategoriesPage';
+import { CategoryDetailPage } from '@/modules/categories/pages/CategoryDetailPage';
+import { CategoryFormPage } from '@/modules/categories/pages/CategoryFormPage';
+import { AccountPage } from '@/modules/settings/pages/AccountPage';
+import { SettingsPage } from '@/modules/settings/pages/SettingsPage';
 
 export type NavIconKey =
   | 'dashboard'
@@ -59,14 +64,24 @@ export const appRoutes: AppRouteConfig[] = [
     label: 'Categories',
     path: '/categories',
     permission: 'categories.view',
-    element: (
-      <AdminPlaceholderPage
-        title="Categories"
-        description="Manage commodity categories, quality bands, and the classification rules that organize marketplace posts."
-        accent="green"
-      />
-    ),
+    element: <CategoriesPage />,
     icon: 'categories',
+  },
+  {
+    label: 'New Category',
+    path: '/categories/new',
+    permission: 'categories.view',
+    element: <CategoryFormPage />,
+    icon: 'categories',
+    showInNav: false,
+  },
+  {
+    label: 'Category Details',
+    path: '/categories/:categoryId',
+    permission: 'categories.view',
+    element: <CategoryDetailPage />,
+    icon: 'categories',
+    showInNav: false,
   },
   {
     label: 'Forms',
@@ -204,6 +219,22 @@ export const appRoutes: AppRouteConfig[] = [
       />
     ),
     icon: 'team',
+  },
+  {
+    label: 'My Account',
+    path: '/account',
+    permission: 'account.view',
+    element: <AccountPage />,
+    icon: 'team',
+    showInNav: false,
+  },
+  {
+    label: 'Settings',
+    path: '/settings',
+    permission: 'settings.view',
+    element: <SettingsPage />,
+    icon: 'forms',
+    showInNav: false,
   },
   {
     label: 'Buyers',

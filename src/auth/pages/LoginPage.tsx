@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { connectSocket } from "@/services/sockets/socket";
 import { initFcm } from "@/services/firebase/fcm.service";
 import { useAuth } from "@/auth/hooks/useAuth";
@@ -149,7 +149,8 @@ const accessBadges = [
 
 export const LoginPage = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const location = useLocation();
+  const { login, status } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -167,16 +168,22 @@ export const LoginPage = () => {
   const onSubmit = async (values: LoginFormValues) => {
     try {
       const session = await login(values);
-      console.log("session", session);
-      // connectSocket(session.accessToken);
-      // void initFcm(() => undefined);
-      navigate("/", { replace: true });
+      connectSocket(session.accessToken);
+      void initFcm(() => undefined);
+      const destination =
+        (location.state as { from?: { pathname?: string } } | null)?.from
+          ?.pathname ?? "/";
+      navigate(destination === "/login" ? "/" : destination, { replace: true });
     } catch (err) {
       setError("root", {
         message: err instanceof Error ? err.message : "Unable to login",
       });
     }
   };
+
+  if (status === "authenticated") {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div className="grid min-h-screen bg-background text-ink lg:grid-cols-[42%_58%]">

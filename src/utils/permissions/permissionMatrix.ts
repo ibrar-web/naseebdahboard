@@ -30,6 +30,8 @@ export const permissionMatrix: Record<AdminRole, AppPermission[]> = {
     'analytics.view',
     'reports.view',
     'team.view',
+    'account.view',
+    'settings.view',
   ],
   agent: [
     'dashboard.view',
@@ -57,5 +59,7 @@ export const permissionMatrix: Record<AdminRole, AppPermission[]> = {
     'documents.verify',
     'reports.view',
     'team.view',
+    'account.view',
+    'settings.view',
   ],
 };

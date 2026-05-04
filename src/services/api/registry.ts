@@ -1,4 +1,5 @@
 import { authEndpoint } from '@/services/api/endpoints/auth.endpoint';
+import { catalogEndpoint, masterDataEndpoint } from '@/services/api/endpoints/catalog.endpoint';
 import { dealsEndpoint } from '@/services/api/endpoints/deals.endpoint';
 import { marketplaceEndpoint } from '@/services/api/endpoints/marketplace.endpoint';
 import { usersEndpoint } from '@/services/api/endpoints/users.endpoint';
@@ -8,4 +9,6 @@ export const apiRegistry = {
   users: usersEndpoint,
   marketplace: marketplaceEndpoint,
   deals: dealsEndpoint,
+  catalog: catalogEndpoint,
+  masterData: masterDataEndpoint,
 };

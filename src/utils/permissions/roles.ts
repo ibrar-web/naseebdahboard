@@ -28,4 +28,6 @@ export type AppPermission =
   | 'documents.verify'
   | 'analytics.view'
   | 'reports.view'
-  | 'team.view';
+  | 'team.view'
+  | 'account.view'
+  | 'settings.view';
