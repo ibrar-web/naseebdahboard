@@ -70,8 +70,6 @@ export const useSessionRestore = () => {
       registerUnauthorizedHandler(null);
       registerRefreshSessionHandler(null);
     };
-    // bootstrap once at app load
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clearAuthSession, restoreAuthSession, setAuthSession]);
 
   return auth;

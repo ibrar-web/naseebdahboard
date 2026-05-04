@@ -1,0 +1,40 @@
+:root {
+  --color-background: 241 245 240;
+  --color-surface: 255 255 255;
+  --color-surface-muted: 248 250 247;
+  --color-primary: 29 83 61;
+  --color-primary-light: 61 143 101;
+  --color-secondary: 217 151 38;
+  --color-text-primary: 20 24 38;
+  --color-text-secondary: 100 108 122;
+  --color-text-muted: 149 157 171;
+  --color-border: 223 229 228;
+  --color-error: 185 28 28;
+
+  --color-brand-50: 245 248 244;
+  --color-brand-100: 230 239 225;
+  --color-brand-200: 202 223 195;
+  --color-brand-300: 167 198 158;
+  --color-brand-400: 124 162 115;
+  --color-brand-500: 94 133 87;
+  --color-brand-600: 72 105 69;
+  --color-brand-700: 58 84 56;
+  --color-brand-800: 49 68 48;
+  --color-brand-900: 42 57 43;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+}
